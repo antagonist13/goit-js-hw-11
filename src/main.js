@@ -1,8 +1,28 @@
-import { getImages } from './js/pixabay-api'
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-const searchBtn = document.querySelector(".search-btn")
+import { getImages } from './js/pixabay-api'
+import { createMarkup } from './js/render-functions'
+
+const gallery = document.querySelector(".gallery")
+const searchForm = document.querySelector(".gallery-form")
 const searchInput = document.querySelector(".search-window")
 
-console.log(getImages('roses').then((el) => {
-    (el)
-})); 
+searchForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    imgCreating().then(el => {
+        const imgList = el.hits
+        gallery.innerHTML = usersTemplate(imgList)
+    })
+})
+function imgCreating() {
+    console.log(searchInput.value);
+    const img = getImages(searchInput.value)
+    return img
+}
+function usersTemplate(arr) {
+            return arr.map(createMarkup).join('');
+             
+        }
