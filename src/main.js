@@ -16,7 +16,7 @@ searchForm.addEventListener('submit', (event) => {
     loadingIndicator.style.display = 'block'
     imgCreating().then(el => {;
         const imgList = el.hits
-        if (el.hits == 0) {
+        if (imgList.length === 0) {
             iziToast.error({
             message: `Sorry, there are no images matching your search query. Please try again!`,
             position: 'topRight'
