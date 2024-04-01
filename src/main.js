@@ -9,21 +9,47 @@ import { createMarkup } from './js/render-functions'
 const gallery = document.querySelector(".gallery")
 const searchForm = document.querySelector(".gallery-form")
 const searchInput = document.querySelector(".search-window")
+const loadingIndicator = document.querySelector('.loader');
 
 searchForm.addEventListener('submit', (event) => {
     event.preventDefault()
-    imgCreating().then(el => {
+    loadingIndicator.style.display = 'block'
+    imgCreating().then(el => {;
         const imgList = el.hits
-        gallery.innerHTML = usersTemplate(imgList)
-    })
-    searchInput.value = ''
-})
+
+        if (el.hits == 0) {
+            iziToast.error({
+            message: `Sorry, there are no images matching your search query. Please try again!`,
+            position: 'topRight'
+        });
+        }
+            gallery.innerHTML = imgTemplate(imgList)
+            let lightbox = new SimpleLightbox('.gallery li a', { captionsData: 'alt', captionsDelay: 250 });
+            lightbox.refresh()
+        }).then(data => {
+            loadingIndicator.style.display = 'none'
+        }).catch(el => console.log(el))
+        searchInput.value = ''
+    }
+)
 function imgCreating() {
-    console.log(searchInput.value);
     const img = getImages(searchInput.value)
+    console.log(img);
     return img
 }
-function usersTemplate(arr) {
+function imgTemplate(arr) {
     return arr.map(createMarkup).join('');
              
 }
+function promiseCheck (data) {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (data) {
+          reject();
+      } else {
+        resolve();
+      }
+    }, 0)
+  })
+    return promise;
+  }
