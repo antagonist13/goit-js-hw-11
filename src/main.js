@@ -16,7 +16,6 @@ searchForm.addEventListener('submit', (event) => {
     loadingIndicator.style.display = 'block'
     imgCreating().then(el => {;
         const imgList = el.hits
-
         if (el.hits == 0) {
             iziToast.error({
             message: `Sorry, there are no images matching your search query. Please try again!`,
@@ -28,13 +27,12 @@ searchForm.addEventListener('submit', (event) => {
             lightbox.refresh()
         }).then(data => {
             loadingIndicator.style.display = 'none'
-        }).catch(el => console.log(el))
+        }).catch(error => console.log(error))
         searchInput.value = ''
     }
 )
 function imgCreating() {
     const img = getImages(searchInput.value)
-    console.log(img);
     return img
 }
 function imgTemplate(arr) {
