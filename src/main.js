@@ -16,6 +16,7 @@ searchForm.addEventListener('submit', (event) => {
         const imgList = el.hits
         gallery.innerHTML = usersTemplate(imgList)
     })
+    searchInput.value = ''
 })
 function imgCreating() {
     console.log(searchInput.value);
@@ -23,6 +24,6 @@ function imgCreating() {
     return img
 }
 function usersTemplate(arr) {
-            return arr.map(createMarkup).join('');
+    return arr.map(createMarkup).join('');
              
-        }
+}
