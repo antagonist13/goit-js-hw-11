@@ -39,15 +39,3 @@ function imgTemplate(arr) {
     return arr.map(createMarkup).join('');
              
 }
-function promiseCheck (data) {
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (data) {
-          reject();
-      } else {
-        resolve();
-      }
-    }, 0)
-  })
-    return promise;
-  }
